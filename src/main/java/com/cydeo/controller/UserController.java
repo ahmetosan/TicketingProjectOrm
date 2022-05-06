@@ -1,6 +1,7 @@
 package com.cydeo.controller;
 
 import com.cydeo.dto.UserDTO;
+import com.cydeo.service.RoleService;
 import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,21 +13,20 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private final UserService userService;
+    private final RoleService roleService;
 
-//    RoleService roleService;
-//    UserService userService;
-//
-//    public UserController(RoleService roleService, UserService userService) {
-//        this.roleService = roleService;
-//        this.userService = userService;
-//    }
-//
+    public UserController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
+
     @GetMapping("/create")
     public String createUser(Model model) {
 
         model.addAttribute("user", new UserDTO());
-        model.addAttribute("roles", roleService.findAll());
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("roles", roleService.listAllRoles());
+        model.addAttribute("users", userService.listAllUsers());
 
         return "/user/create";
     }
