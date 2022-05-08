@@ -77,4 +77,10 @@ public class UserServiceImpl implements UserService {
 
 
     }
+
+    @Override
+    public List<UserDTO> findManagers() {
+        return listAllUser().stream().filter(user->user.getRole().getDescription().
+                equals("MANAGER")).collect(Collectors.toList());
+    }
 }
